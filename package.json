@@ -1,0 +1,21 @@
+{
+  "name": "stoic-ai",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A stoic AI philosopher that helps improve your mood with a personalized quote.",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx http-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "stoic",
+    "AI",
+    "philosopher"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "openai": "^3.1.0"
+  }
+}
