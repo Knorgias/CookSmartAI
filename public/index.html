@@ -12,61 +12,37 @@
           alt=""></div>
       I feel: <input type="text" id="input">
       <button id="make-request">Give me a quote</button>
-      <div id="response">
-      </div>
+      <div id="response"></div>
     </div>
-    <script type="module">
-      import { myToken } from './token.js';
-
+    <script>
       const button = document.querySelector('#make-request');
 
       const getQuote = () => {
         const myInput = document.getElementById('input').value;
         const myPrompt = `Understand the Emotion based on the Input and provide a helpful stoic Quote from a philosopher of any time.\n\nInput: \"${myInput}\"\nQuote:`;
 
-        // The configuration for the API request to OpenAI
         const openAiConfig = {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${myToken}`
           },
           body: JSON.stringify({
-            model: 'text-curie-001',
-            prompt: myPrompt,
-            temperature: 1,
-            max_tokens: 100,
-            top_p: 1,
-            frequency_penalty: 0.5,
-            presence_penalty: 0,
-          })
-        }
+            input: myInput,
+          }),
+        };
 
-        fetch('https://api.openai.com/v1/completions', openAiConfig)
-          .then(response => response.json())
+        fetch('/openai-api', openAiConfig)
+          .then(response => response.text())
           .then(data => {
             const responseDiv = document.getElementById('response');
-            const text = data.choices[0].text;
-            let index = 0;
-            const intervalId = setInterval(() => {
-              responseDiv.innerText = text.slice(0, index);
-              index++;
-              if (index > text.length) {
-                clearInterval(intervalId);
-              }
-            }, 50);
-
-            // logs for debugging
-            console.log(myPrompt);
-            console.log(data.choices);
+            responseDiv.innerText = data;
           })
           .catch(error => {
             console.error('Error:', error);
-            // default message in case of failure
+            const responseDiv = document.getElementById('response');
             responseDiv.innerText = 'Hmm, something went wrong.. please try again';
           });
-
-      }
+      };
       button.addEventListener('click', getQuote);
     </script>
   </body>
