@@ -1,8 +1,18 @@
-import fetch from 'node-fetch';
-import { json } from 'body-parser';
+import fetch from 'isomorphic-fetch';
 
 export async function handler(event) {
-  const myInput = JSON.parse(event.body).input;
+  let myInput = undefined;
+  try {
+    console.log(event.body);
+    myInput = JSON.parse(event.body).input;
+    // rest of the code
+  } catch (error) {
+    console.error('Error parsing JSON input:', error);
+    return {
+      statusCode: 400,
+      body: `Error: ${error}, req body: ${event.body.input}, myInput: ${myInput}`,
+    };
+  }
   const myPrompt = `Understand the Emotion based on the Input and provide a helpful stoic Quote from a philosopher of any time.\n\nInput: \"${myInput}\"\nQuote:`;
 
   // The configuration for the API request to OpenAI
@@ -37,7 +47,7 @@ export async function handler(event) {
     console.error('Error:', error);
     return {
       statusCode: 500,
-      body: 'Hmm, something went wrong.. please try again',
+      body: `error occured: ${error}`,
     };
   }
 }
