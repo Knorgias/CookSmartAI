@@ -1,7 +1,7 @@
-const fetch = require('node-fetch');
-const bodyParser = require('body-parser');
+import fetch from 'node-fetch';
+import { json } from 'body-parser';
 
-module.exports.handler = async function (event) {
+export async function handler(event) {
   const myInput = JSON.parse(event.body).input;
   const myPrompt = `Understand the Emotion based on the Input and provide a helpful stoic Quote from a philosopher of any time.\n\nInput: \"${myInput}\"\nQuote:`;
 
@@ -40,4 +40,4 @@ module.exports.handler = async function (event) {
       body: 'Hmm, something went wrong.. please try again',
     };
   }
-};
+}
