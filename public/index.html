@@ -31,7 +31,7 @@
           }),
         };
 
-        fetch('/openai-api', openAiConfig)
+        fetch('/.netlify/functions/openai-api', openAiConfig)
           .then(response => response.text())
           .then(data => {
             const responseDiv = document.getElementById('response');
