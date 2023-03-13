@@ -1,7 +1,0 @@
-{
-  "name": "my-function",
-  "dependencies": {
-    "node-fetch": "^3.0.0",
-    "body-parser": "^1.19.0"
-  }
-}
