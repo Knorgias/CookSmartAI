@@ -1,0 +1,2 @@
+[dev]
+  publish = "public" # The path to your static content folder
