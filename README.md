@@ -1,8 +1,8 @@
-# StoicAI - README
+# CookSmartAI - README
 
 ## Getting Started
 
-1. Clone this repo: `git clone https://github.com/Knorgias/stoic-ai.git`
+1. Clone this repo: `git clone https://github.com/Knorgias/CookSmartAI.git`
 2. Install dependencies: `npm i`
 3. Start the app: `npm start`
 

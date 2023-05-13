@@ -8,10 +8,8 @@
 
   <body>
     <div id="container">
-      <div id="image-container"><img src="https://p1.ssl.qhimg.com/dr/270_500_/t0155112c483882ebc0.png?size=355x474"
-          alt=""></div>
-      I feel: <input type="text" id="input">
-      <button id="make-request">Give me a quote</button>
+      Main ingredient: <input type="text" id="input">
+      <button id="make-request">Give me a recipe</button>
       <div id="response"></div>
     </div>
     <script>
@@ -19,7 +17,6 @@
 
       const getQuote = () => {
         const myInput = document.getElementById('input').value;
-        const myPrompt = `Understand the Emotion based on the Input and provide a helpful stoic Quote from a philosopher of any time.\n\nInput: \"${myInput}\"\nQuote:`;
 
         const openAiConfig = {
           method: 'POST',

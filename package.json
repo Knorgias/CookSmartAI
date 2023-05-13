@@ -1,8 +1,8 @@
 {
-  "name": "stoic-ai",
+  "name": "cooksmart-ai",
   "version": "0.0.1",
   "type": "module",
-  "description": "A stoic AI philosopher that helps improve your mood with a personalized quote.",
+  "description": "An AI-powered web app that generates cooking recipes based on criteria, such as location, season, main ingredient & can generate grocery list from the recipes.",
   "main": "index.js",
   "scripts": {
     "start": "netlify dev",

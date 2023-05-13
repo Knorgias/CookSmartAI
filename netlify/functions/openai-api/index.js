@@ -13,8 +13,7 @@ export async function handler(event) {
       body: `Error: ${error}, req body: ${event.body.input}, myInput: ${myInput}`,
     };
   }
-  const myPrompt = `Understand the Emotion based on the Input and provide a helpful stoic Quote from a philosopher of any time.\n\nInput: \"${myInput}\"\nQuote:`;
-
+  const myPrompt = `Give me one recipe that best meets the following criteria. List the title, ingredients and instructions.\n\nCriteria:\n- Ready-to-eat in: under 60 minutes\n- Main ingredient: ${myInput}\n- Cook only in: oven\n- No “fancy” ingredients, like saffron or caviar\n- Origin: Greece\n- Seasonal to: spring\n\nRecipe:\n`;
   // The configuration for the API request to OpenAI
   const openAiConfig = {
     method: 'POST',
@@ -26,7 +25,7 @@ export async function handler(event) {
       model: 'text-curie-001',
       prompt: myPrompt,
       temperature: 1,
-      max_tokens: 100,
+      max_tokens: 1024,
       top_p: 1,
       frequency_penalty: 0.5,
       presence_penalty: 0,
