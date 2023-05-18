@@ -2,21 +2,101 @@
 <html>
 
   <head>
-    <title>Get quotes from OpenAI</title>
+    <title>Get an awesome recipe!</title>
     <link rel="stylesheet" href="mystyle.css">
   </head>
 
   <body>
-    <div id="container">
-      Main ingredient: <input type="text" id="input">
-      <button id="make-request">Give me a recipe</button>
-      <div id="response"></div>
+    <div id="main">
+      <h3>Welcome to CookSmartAI!<br> Select your preferences below and click on "Give me a recipe" to get an
+        awesome, personalized recipe!</h3>
+      <div id="container">
+        <div class="sidebar">
+          <div class="sidebar-item">
+            <div>Dish type:</div>
+            <select id="dish-type">
+              <option value="Any" selected>Any</option>
+              <option value="meat">Meat</option>
+              <option value="fish">Fish</option>
+              <option value="Salad">Salad</option>
+              <option value="Brunch">Brunch</option>
+              <option value="Vegetarian">Vegetarian</option>
+              <option value="Vegan">Vegan</option>
+              <option value="Eggs">Eggs</option>
+
+            </select>
+          </div>
+          <div class="sidebar-item">
+            <div>Cook in:</div>
+            <select id="cook-in">
+              <option value="Anything" selected>Anything</option>
+              <option value="Oven">Oven</option>
+              <option value="Pan">Pan</option>
+            </select>
+          </div>
+          <div class="sidebar-item">
+            <div>Preparation time:</div>
+            <select id="preparation-time">
+              <option value="Any" selected>Any</option>
+              <option value="Under 60 minutes">Under 60 minutes</option>
+              <option value="Under 30 minutes">Under 30 minutes</option>
+            </select>
+          </div>
+          <div class="sidebar-item">
+            <div>Originally from:</div>
+            <select id="origin">
+              <option value="Anywhere" selected>Anywhere</option>
+              <option value="Albania">Albania</option>
+              <option value="Greece">Greece</option>
+              <option value="Netherlands">Netherlands</option>
+              <option value="Spain">Spain</option>
+              <option value="Asia">Asia</option>
+              <option value="Africa">Africa</option>
+              <option value="America">America</option>
+              <option value="Europe">Europe</option>
+            </select>
+          </div>
+          <div class="sidebar-item">
+            <div>Seasonal to:</div>
+            <select id="seasonal-to">
+              <option value="any season" selected>Any season</option>
+              <option value="Spring">Spring</option>
+              <option value="Summer">Summer</option>
+              <option value="Autumn">Autumn</option>
+              <option value="Winter">Winter</option>
+            </select>
+          </div>
+          <div class="sidebar-item">
+            <div>Simple ingredients:</div>
+            <select id="simple-ingredients-only">
+              <option value="Yes" selected>Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <button class="sidebar-item" id="make-request">Give me a recipe</button>
+        </div>
+        <div id="response"></div>
+      </div>
     </div>
     <script>
       const button = document.querySelector('#make-request');
 
       const getQuote = () => {
-        const myInput = document.getElementById('input').value;
+        const dishType = document.getElementById('dish-type').value;
+        const cookIn = document.getElementById('cook-in').value;
+        const preparationTime = document.getElementById('preparation-time').value;
+        const simpleIngredientsOnly = document.getElementById('simple-ingredients-only').value;
+        const origin = document.getElementById('origin').value;
+        const seasonalTo = document.getElementById('seasonal-to').value;
+
+        const myInput = {
+          dishType: dishType,
+          cookIn: cookIn,
+          preparationTime: preparationTime,
+          simpleIngredientsOnly: simpleIngredientsOnly,
+          origin: origin,
+          seasonalTo: seasonalTo
+        };
 
         const openAiConfig = {
           method: 'POST',
@@ -29,15 +109,20 @@
         };
 
         fetch('/.netlify/functions/openai-api', openAiConfig)
-          .then(response => response.text())
+          .then(response => response.json())
           .then(data => {
             const responseDiv = document.getElementById('response');
-            responseDiv.innerText = data;
+            responseDiv.innerText = data.choices[0].text;
+
+            // Check if additionalInfo exists in the data object
+            if (data.myPrompt) {
+              console.log(data.myPrompt);
+            }
           })
           .catch(error => {
             console.error('Error:', error);
             const responseDiv = document.getElementById('response');
-            responseDiv.innerText = 'Hmm, something went wrong.. please try again';
+            responseDiv.innerText = 'Hmm, something went wrong... please try again';
           });
       };
       button.addEventListener('click', getQuote);
