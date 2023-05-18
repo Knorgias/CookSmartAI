@@ -1,20 +1,60 @@
 /* Set the background color and font for the body */
 body {
-  background-color: #f2e8d8;
-  font-family: 'Gentium Basic', serif;
+  background-color: #c9dae9;
+  font-family: 'Arial', sans-serif;
   font-size: 18px;
   line-height: 1.5;
   text-align: center;
 }
 
+#topbar {
+  max-width: 70vw;
+  margin: auto;
+  border-bottom: 1px solid #e1d2c7;
+}
+
+h1 {
+  max-width: 70vw;
+}
+
 /* Style the container that holds the input, button, and response */
 #container {
-  max-width: 600px;
+  display: flex;
+  height: 80vh;
   margin: 0 auto;
   padding: 40px;
-  background-color: #f7f0e1;
-  border: 1px solid #d8c3a5;
+  background-color: #fff;
+  border: 1px solid #e1d2c7;
   border-radius: 10px;
+  text-align: center;
+  max-width: 70vw;
+  gap: 20px;
+}
+
+.sidebar {
+  border: 1px solid #e1d2c7;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  height: 100%;
+  gap: 20px;
+  padding: 10px;
+  background-color: #c9dae9;
+}
+
+.sidebar-item {
+  border-bottom: 1px solid black;
+  font-size: 16px;
+  text-align: start;
+}
+
+.sidebar-item > * {
+  font-size: 20px;
+}
+
+.sidebar-item select {
+  width: 100%;
 }
 
 /* Style the input box */
@@ -22,7 +62,7 @@ body {
   padding: 10px;
   width: 70%;
   font-size: 18px;
-  border: 1px solid #d8c3a5;
+  border: 1px solid #e1d2c7;
   border-radius: 5px;
 }
 
@@ -30,31 +70,30 @@ body {
 #make-request {
   padding: 10px;
   font-size: 18px;
-  border: 1px solid #d8c3a5;
+  border: 1px solid #e1d2c7;
+  text-align: center;
   border-radius: 5px;
-  background-color: #f2e8d8;
+  background-color: #fff;
   color: #333;
   cursor: pointer;
   margin-top: 10px;
 }
 
-/* Style the response box */
-#response {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #d8c3a5;
-  border: 1px solid #b39f7a;
-  border-radius: 10px;
-  font-size: 20px;
-  font-style: italic;
-  text-align: left;
-  overflow: hidden;
+#make-request:hover {
+  background-color: #41b4e6;
 }
 
-/* Style the prompt text */
-#response:before {
-  content: "Quote:";
-  font-weight: bold;
+/* Style the response box */
+#response {
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  background-color: #c9dae9;
+  border: 1px solid #c7b5a9;
+  border-radius: 10px;
+  font-size: 16px;
+  text-align: left;
+  overflow-y: scroll;
 }
 
 #image-container {
@@ -65,5 +104,13 @@ img {
   max-width: 100%;
 }
 
-/* Add a custom font for the body text */
-@import url('https://fonts.googleapis.com/css2?family=Gentium+Basic&display=swap');
+/* Media query for the breakpoint */
+@media (max-width: 600px) {
+  #container {
+    flex-direction: column;
+  }
+  .sidebar {
+    margin-right: 0;
+    min-width: 100%;
+    margin-bottom: 20px;
+  }
