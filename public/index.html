@@ -82,6 +82,9 @@
       const button = document.querySelector('#make-request');
 
       const getQuote = () => {
+        // Add spinner animation
+        document.getElementById('response').innerHTML = '<div class="spinner"></div>';
+
         const dishType = document.getElementById('dish-type').value;
         const cookIn = document.getElementById('cook-in').value;
         const preparationTime = document.getElementById('preparation-time').value;
