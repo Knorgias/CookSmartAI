@@ -13,17 +13,32 @@
       <div id="container">
         <div class="sidebar">
           <div class="sidebar-item">
-            <div>Dish type:</div>
-            <select id="dish-type">
+            <div>Category:</div>
+            <select id="category">
               <option value="Any" selected>Any</option>
-              <option value="meat">Meat</option>
-              <option value="fish">Fish</option>
+              <option value="Any Meat">Any Meat</option>
+              <option value="Chicken">Chicken</option>
+              <option value="Beef">Beef</option>
+              <option value="Lamb">Lamb</option>
+              <option value="Pork">Pork</option>
+              <option value="Fish">Fish</option>
               <option value="Salad">Salad</option>
               <option value="Brunch">Brunch</option>
               <option value="Vegetarian">Vegetarian</option>
               <option value="Vegan">Vegan</option>
               <option value="Eggs">Eggs</option>
-
+            </select>
+          </div>
+          <div class="sidebar-item">
+            <div>Occasion:</div>
+            <select id="occasion">
+              <option value="Any" selected>Any</option>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Brunch">Brunch</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
+              <option value="Sweet snack">Sweet snack</option>
+              <option value="Salty snack">Salty snack</option>
             </select>
           </div>
           <div class="sidebar-item">
@@ -80,12 +95,14 @@
     </div>
     <script>
       const button = document.querySelector('#make-request');
+      const responseDiv = document.getElementById('response');
 
       const getQuote = () => {
         // Add spinner animation
-        document.getElementById('response').innerHTML = '<div class="spinner"></div>';
+        responseDiv.innerHTML = '<div class="spinner"></div>';
 
-        const dishType = document.getElementById('dish-type').value;
+        const category = document.getElementById('category').value;
+        const occasion = document.getElementById('occasion').value;
         const cookIn = document.getElementById('cook-in').value;
         const preparationTime = document.getElementById('preparation-time').value;
         const simpleIngredientsOnly = document.getElementById('simple-ingredients-only').value;
@@ -93,12 +110,13 @@
         const seasonalTo = document.getElementById('seasonal-to').value;
 
         const myInput = {
-          dishType: dishType,
-          cookIn: cookIn,
-          preparationTime: preparationTime,
-          simpleIngredientsOnly: simpleIngredientsOnly,
-          origin: origin,
-          seasonalTo: seasonalTo
+          category,
+          occasion,
+          cookIn,
+          preparationTime,
+          simpleIngredientsOnly,
+          origin,
+          seasonalTo
         };
 
         const openAiConfig = {
@@ -114,8 +132,10 @@
         fetch('/.netlify/functions/openai-api', openAiConfig)
           .then(response => response.json())
           .then(data => {
-            const responseDiv = document.getElementById('response');
-            responseDiv.innerText = data.choices[0].text;
+            const responseText = data.choices[0].text;
+            console.log(responseText);
+            responseDiv.innerHTML = ''; // Clear the existing content
+            typeOut(responseText, responseDiv); // Call the typing animation function
 
             // Check if additionalInfo exists in the data object
             if (data.myPrompt) {
@@ -124,9 +144,21 @@
           })
           .catch(error => {
             console.error('Error:', error);
-            const responseDiv = document.getElementById('response');
             responseDiv.innerText = 'Hmm, something went wrong... please try again';
           });
+      };
+
+
+      // Function to perform typing animation
+      const typeOut = (text, element) => {
+        let index = 0;
+        const typingInterval = setInterval(() => {
+          element.innerHTML += text[index].replace(/\n/g, "<br>");
+          index++;
+          if (index >= text.length) {
+            clearInterval(typingInterval);
+          }
+        }, 10); // Adjust typing speed by changing the interval value
       };
       button.addEventListener('click', getQuote);
     </script>

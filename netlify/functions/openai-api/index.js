@@ -22,8 +22,9 @@ export async function handler(event) {
   }
 
   const myPrompt = `Give me one recipe that best meets the following criteria. List the title, ingredients and instructions.\n\nCriteria:\n
+    - Category: ${myInput.category}
+    - Occasion: ${myInput.occasion}
     - Preparation time: ${myInput.preparationTime}
-    - Dish type: ${myInput.dishType}
     - Cook only in: ${myInput.cookIn}
     - Country of origin: ${myInput.origin}
     - Seasonal to: ${myInput.seasonalTo}
@@ -42,7 +43,7 @@ export async function handler(event) {
       model: 'text-curie-001',
       prompt: myPrompt,
       temperature: 1,
-      max_tokens: 1024,
+      max_tokens: 1800,
       top_p: 1,
       frequency_penalty: 0.5,
       presence_penalty: 0,
