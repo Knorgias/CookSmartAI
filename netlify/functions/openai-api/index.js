@@ -13,7 +13,24 @@ export async function handler(event) {
       body: `Error: ${error}, req body: ${event.body.input}, myInput: ${myInput}`,
     };
   }
-  const myPrompt = `Give me one recipe that best meets the following criteria. List the title, ingredients and instructions.\n\nCriteria:\n- Ready-to-eat in: under 60 minutes\n- Main ingredient: ${myInput}\n- Cook only in: oven\n- No “fancy” ingredients, like saffron or caviar\n- Origin: Greece\n- Seasonal to: spring\n\nRecipe:\n`;
+
+  function _renderSimpleIngredientsOnly() {
+    if (myInput.simpleIngredientsOnly.toLowerCase() === 'yes') {
+      return `- No "fancy" ingredients, like saffron or caviar\n\nRecipe:\n`;
+    }
+    return `\nRecipe:\n`;
+  }
+
+  const myPrompt = `Give me one recipe that best meets the following criteria. List the title, ingredients and instructions.\n\nCriteria:\n
+    - Preparation time: ${myInput.preparationTime}
+    - Dish type: ${myInput.dishType}
+    - Cook only in: ${myInput.cookIn}
+    - Country of origin: ${myInput.origin}
+    - Seasonal to: ${myInput.seasonalTo}
+    ${_renderSimpleIngredientsOnly()}
+  `;
+
+  console.log(myPrompt);
   // The configuration for the API request to OpenAI
   const openAiConfig = {
     method: 'POST',
@@ -38,9 +55,13 @@ export async function handler(event) {
       openAiConfig,
     );
     const data = await response.json();
+
+    // Modify the data object by adding a new key-value pair
+    data.myPrompt = myPrompt;
+
     return {
       statusCode: 200,
-      body: data.choices[0].text,
+      body: JSON.stringify(data),
     };
   } catch (error) {
     console.error('Error:', error);
