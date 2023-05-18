@@ -26,6 +26,7 @@ h1 {
 /* Style the container that holds the input, button, and response */
 #container {
   display: flex;
+  flex-direction: column;
   height: 80vh;
   margin: 0 auto;
   padding: 40px;
@@ -41,15 +42,18 @@ h1 {
   border: 1px solid #e1d2c7;
   border-radius: 5px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
   min-width: 200px;
-  height: 100%;
   gap: 20px;
   padding: 10px;
   background-color: #343541;
 }
 
 .sidebar-item {
+  flex-grow: 1;
+  max-width: 200px;
   border-bottom: 1px solid black;
   font-size: 16px;
   text-align: start;
@@ -57,6 +61,7 @@ h1 {
 
 .sidebar-item > * {
   font-size: 20px;
+  font-weight: bold;
 }
 
 .sidebar-item select {
@@ -75,14 +80,15 @@ h1 {
 /* Style the button */
 #make-request {
   padding: 10px;
-  font-size: 18px;
-  border: 1px solid #e1d2c7;
+  font-size: 28px;
+  border: 2px solid #e1d2c7;
   text-align: center;
   border-radius: 5px;
   background-color: #fff;
   color: #333;
   cursor: pointer;
-  margin-top: 10px;
+  margin: auto;
+  width: 240px;
 }
 
 #make-request:hover {
@@ -111,7 +117,7 @@ img {
 }
 
 /* Media query for the breakpoint */
-@media (max-width: 600px) {
+/* @media (max-width: 900px) {
   #container {
     flex-direction: column;
   }
@@ -120,7 +126,7 @@ img {
     min-width: 100%;
     margin-bottom: 20px;
   }
-}
+} */
 
 /* Spinner animation */
 .spinner {
